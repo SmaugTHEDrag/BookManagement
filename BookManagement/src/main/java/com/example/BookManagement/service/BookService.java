@@ -7,7 +7,6 @@ import com.example.BookManagement.exception.ResourceNotFoundException;
 import com.example.BookManagement.repository.IBookRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,17 +31,25 @@ public class BookService implements IBookService {
 
     @Override
     public BookDTO createBook(BookRequestDTO bookRequestDTO) {
+        // Map new data from DTO to entity
         Book book = modelMapper.map(bookRequestDTO, Book.class);
+        // Store
         Book savedBook = bookRepository.save(book);
+        // Return DTO
         return modelMapper.map(savedBook, BookDTO.class);
     }
 
     @Override
     public BookDTO updateBook(int id, BookRequestDTO bookRequestDTO) {
+        // Check if exist book
         Book existingBook = bookRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFoundException("Book not found with id: "+id));
-
+        // Map new data from DTO to entity
         modelMapper.map(bookRequestDTO, existingBook);
+        // Store it
+        Book updatedBook = bookRepository.save(existingBook);
+        // Return DTO
+        return modelMapper.map(updatedBook, BookDTO.class);
     }
 
     @Override
