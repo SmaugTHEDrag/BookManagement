@@ -1,5 +1,7 @@
 package com.example.BookManagement.service;
 
+import com.example.BookManagement.dto.UserDTO;
+import com.example.BookManagement.dto.UserRequestDTO;
 import com.example.BookManagement.entity.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,6 +13,14 @@ public interface IUserService extends UserDetailsService {
     List<User> getAllUsers();
 
     User getUserById(int id);
+
+    UserDTO createUser(UserRequestDTO userRequestDTO);
+
+    UserDTO updateUser(int id, UserRequestDTO userRequestDTO);
+
+    void deleteUser(int id);
+
+    UserDTO register(UserRequestDTO userRequestDTO);
 
     UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
 }
