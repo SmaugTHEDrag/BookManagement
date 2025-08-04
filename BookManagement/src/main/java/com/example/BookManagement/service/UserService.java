@@ -83,10 +83,14 @@ public class UserService implements IUserService{
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        // Check login if have @ is login by email or not is login by username
         User user = login.contains("@")
-                ? userRepository.findByEmail(login)
-                : userRepository.findByUsername(login);
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), AuthorityUtils.createAuthorityList(user.getRole().toString()));
+                ? userRepository.findByEmail(login).orElseThrow(() -> new UsernameNotFoundException("Email not found"))
+                : userRepository.findByUsername(login).orElseThrow(() -> new UsernameNotFoundException("Username not found"));
+
+        return new org.springframework.security.core.userdetails.User(
+                user.getUsername(),
+                user.getPassword(),
+                AuthorityUtils.createAuthorityList(user.getRole().toString())
+        );
     }
 }

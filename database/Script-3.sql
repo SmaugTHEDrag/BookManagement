@@ -43,6 +43,8 @@ INSERT INTO users (username, password, email, role) VALUES
 ('johndoe', 'password123', 'john@example.com', 'CUSTOMER'),
 ('janedoe', 'mypassword', 'jane@example.com', 'CUSTOMER');
 
+INSERT INTO users (username, password, email, role) VALUES
+('thainguyen', '$2a$12$1K0UASu/wbmtIznD1UtaC.MRKn3/.v9DuPCrnhIp4A8GjdVgFT2ea', 'thainguyen123@example.com', 'ADMIN');
 
 INSERT INTO books (
     bookTitle,
