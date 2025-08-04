@@ -28,7 +28,7 @@ public class Book {
     @Column(nullable=false)
     private String category;
 
-    @Column(name = "bookDescription")
+    @Column(name = "bookDescription", columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "bookPDFURL")

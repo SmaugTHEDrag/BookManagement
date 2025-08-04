@@ -85,4 +85,8 @@ INSERT INTO favorites (user_id, book_id) VALUES
 (3, 1),
 (3, 3);
 
+ALTER TABLE books
+MODIFY COLUMN bookDescription TEXT;
+
+
 
