@@ -10,6 +10,7 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class UserController
     @Autowired
     private ModelMapper modelMapper;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<List<UserDTO>> getAllUsers(){
         List<User> users = userService.getAllUsers();
@@ -43,6 +45,7 @@ public class UserController
         return new ResponseEntity<>(createUserDTO,HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("{id}")
     public ResponseEntity<UserDTO> updateUser(@PathVariable int id, @RequestBody UserRequestDTO userRequestDTO){
         UserDTO updateUserDTO = userService.updateUser(id, userRequestDTO);

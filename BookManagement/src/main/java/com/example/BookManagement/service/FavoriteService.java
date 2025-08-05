@@ -66,9 +66,21 @@ public class FavoriteService implements IFavoriteService{
                 .stream()
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("User not found"));
+
         List<Favorite> favorites = favoriteRepository.findByUserId(user.getId());
+
         return favorites.stream()
-                .map(fav -> modelMapper.map(fav, FavoriteDTO.class))
+                .map(fav -> {
+                    Book book = fav.getBook();
+                    FavoriteDTO dto = new FavoriteDTO();
+                    dto.setId(fav.getId());
+                    dto.setBookId(book.getId());
+                    dto.setTitle(book.getTitle());
+                    dto.setAuthor(book.getAuthor());
+                    dto.setCategory(book.getCategory());
+                    dto.setImage(book.getImage());
+                    return dto;
+                })
                 .collect(Collectors.toList());
     }
 }
